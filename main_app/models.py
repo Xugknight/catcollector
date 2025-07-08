@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.urls import reverse
 
@@ -23,6 +24,9 @@ class Cat(models.Model):
         # Use the 'reverse' function to dynamically find the URL for viewing this cat's details
         return reverse('cat-detail', kwargs={'cat_id': self.id})
     
+    def fed_for_days(self):
+        return self.feeding_set.filter(date=datetime.date.today()).count() >= len(MEALS)
+    
 class Feeding(models.Model):
     date = models.DateField('Feeding date')
     meal = models.CharField(
@@ -36,3 +40,6 @@ class Feeding(models.Model):
     def __str__(self):
         # Nice method for obtaining the friendly value of a Field.choice
         return f"{self.get_meal_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
