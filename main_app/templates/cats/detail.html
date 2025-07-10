@@ -94,7 +94,7 @@
               </a>
               <form action="{% url 'remove-toy' cat.id toy.id %}" method="post">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Remove Toy</button>
+                <button type="submit" class="btn danger">Remove Toy</button>
               </form>
             </div>
           {% empty %}
