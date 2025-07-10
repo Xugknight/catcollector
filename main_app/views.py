@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -9,7 +10,10 @@ def home(request):
     return render(request, 'home.html')
 
 def about(request):
-    return render(request, 'about.html')
+    response = requests.get('https://catfact.ninja/fact')
+    return render(request, 'about.html', {
+        'fact': response.json().get('fact')
+    })
 
 def cat_index(request):
     cats = Cat.objects.all()
