@@ -79,3 +79,8 @@ def associate_toy(request, cat_id, toy_id):
     # cat = Cat.objects.get(id__exact=cat_id)
     # cat.toys.add(toy_id)
     return redirect('cat-detail', cat_id=cat_id)
+
+def remove_toy(request, cat_id, toy_id):
+    cat = Cat.objects.get(id__exact=cat_id)
+    cat.toys.remove(toy_id)
+    return redirect('cat-detail', cat_id=cat.id)
