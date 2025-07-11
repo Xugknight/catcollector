@@ -19,7 +19,10 @@ def about(request):
     })
 
 def cat_index(request):
-    cats = Cat.objects.all()
+    # cats = Cat.objects.all()
+    cats = Cat.objects.filter(user=request.user)
+    # You could also retrieve the logged in user's cats like this
+    # cats = request.user.cat_set.all()
     return render(request, 'cats/index.html', {'cats': cats})
 
 def cat_detail(request, cat_id):
