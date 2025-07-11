@@ -36,8 +36,16 @@ def cat_detail(request, cat_id):
 
 class CatCreate(CreateView):
     model = Cat
-    fields = '__all__'
+    fields = ['name', 'breed', 'description', 'age']
     # success_url = '/cats/{id}' one way to redirect to the newly created cat's page
+
+    # This inherited method is called when a
+    # valid cat form is being submitted
+    def form_valid(self, form):
+        # Assign the logged in user (self.request.user)
+        form.instance.user = self.request.user # form.instance is the cat
+        # Let the CreateView do its job as usual
+        return super().form_valid(form)
 
 class CatUpdate(UpdateView):
     model = Cat
@@ -62,7 +70,7 @@ def add_feeding(request, cat_id):
 
 class ToyCreate(CreateView):
     model = Toy
-    fields = ['name', 'breed', 'description', 'age']
+    fields = '__all__'
 
 class ToyList(ListView):
     model = Toy
